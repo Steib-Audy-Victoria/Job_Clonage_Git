@@ -9,7 +9,7 @@ pipeline {
 stages {
         stage('Cloner le dpt Git') {
             steps {
-                git 'https://github.com/Steib-Audy-Victoria/Job_Clonage_Git.git'  // L'URL de ton dpt
+               git branch: 'main', git 'https://github.com/Steib-Audy-Victoria/Job_Clonage_Git.git'  // L'URL de ton dpt
             }
         }
         stage('Excuter des tests unitaires') {
