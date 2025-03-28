@@ -15,11 +15,20 @@ stages {
         stage('Excuter des tests unitaires') {
             steps {
                                 script {
-                    // Installer pytest si ncessaire
-                    sh 'pip install pytest'   // Installe pytest
+                                       // Crer un environnement virtuel
+                    sh 'python3 -m venv venv'
 
-                    // Commande pour excuter tes tests unitaires
-                    sh 'pytest'  
+                    // Activer l'environnement virtuel
+                    sh '. venv/bin/activate'
+
+                    // Installer pytest dans l'environnement virtuel
+                    sh 'pip install pytest'
+
+                    // Excuter les tests avec pytest
+                    sh 'pytest'
+
+                    // Dsactiver l'environnement virtuel
+                    sh 'deactivate' 
                 }
             }
         }
