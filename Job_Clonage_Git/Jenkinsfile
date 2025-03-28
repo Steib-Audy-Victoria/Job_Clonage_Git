@@ -24,8 +24,6 @@ stages {
                     // Excuter les tests avec pytest
                     sh '. venv/bin/activate && pytest'
 
-                    // Dsactiver l'environnement virtuel
-                    sh 'deactivate'
                 }
             }
         }
