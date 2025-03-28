@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'mon-image-docker:latest'  // Image Docker  construire
+        DEPLOY_SERVER = 'user@serveur-test.com'  // Serveur de test o dployer
+        DEPLOY_PATH = '/path/to/deploy'
+    }
+stages {
+        stage('Cloner le dpt Git') {
+            steps {
+                git 'https://github.com/Steib-Audy-Victoria/Job_Clonage_Git.git'  // L'URL de ton dpt
+            }
+        }
+        stage('Excuter des tests unitaires') {
+            steps {
+                script {
+                    // Commande pour excuter tes tests unitaires
+                    sh 'pytest'  
+                }
+            }
+        }
+stage('Build Docker Image') {
+            steps {
+                script {
+                    // Construire l'image Docker
+                    sh 'docker build -t $DOCKER_IMAGE .' 
+                }
+            }
+        }
+stage('Dployer sur serveur de test') {
+            steps {
+                script {
+                    // Dployer l'application sur un serveur de test
+                    sh """
+                    ssh $DEPLOY_SERVER "mkdir -p $DEPLOY_PATH"
+                    scp ./mon-application $DEPLOY_SERVER:$DEPLOY_PATH
+                    ssh $DEPLOY_SERVER "cd $DEPLOY_PATH && docker-compose up -d"
+                    """
+                }
+            }
+        }
+    }
+}
