@@ -14,7 +14,10 @@ stages {
         }
         stage('Excuter des tests unitaires') {
             steps {
-                script {
+                                script {
+                    // Installer pytest si ncessaire
+                    sh 'pip install pytest'   // Installe pytest
+
                     // Commande pour excuter tes tests unitaires
                     sh 'pytest'  
                 }
